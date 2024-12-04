@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背背单词 - Bag*2 word </title>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #818CF8;
+            --background-color: #F3F4F6;
+            --text-color: #1F2937;
+            --border-color: #E5E7EB;
+            --hover-color: #4338CA;
+            --error-color: #DC2626;
+            --error-bg: #FEE2E2;
+            --love-color: #E91E63;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .input-section {
+            margin-bottom: 24px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .result-section {
+            display: none;
+            background-color: #F9FAFB;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .result-item {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 1.25em;
+        }
+        
+        .pronunciation {
+            color: #6B7280;
+            font-family: monospace;
+            background-color: #F3F4F6;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .example {
+            background-color: #EEF2FF;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+        
+        .error-message {
+            display: none;
+            color: var(--error-color);
+            background-color: var(--error-bg);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .etymology-item {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+        
+        .memory-tips {
+            background-color: #ECFDF5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .special-message {
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .rose {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--love-color);
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        .love-message {
+            color: var(--love-color);
+            font-size: 24px;
+            margin: 20px 0;
+            font-weight: bold;
+            animation: pulseAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulseAnimation {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>背背单词 - Bag*2 word </h1>
+            <p> 🌹学英语的都要感谢 若文 🌹</p>
+            <p> 公益平台 容易倒闭 常回家看看 </p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="wordInput" placeholder="请输入要查询的英语单词..." />
+                <button onclick="handleWordAnalysis()">查询</button>
+            </div>
+        </div>
+        
+        <div id="loadingIndicator" class="loading">
+            正在分析单词，联网时间长 请稍候 稍安勿躁... 🤔
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+        
+        <div id="resultSection" class="result-section"></div>
+    </div>
+
+    <script>
+        const KIMI_API_ENDPOINT = 'https://api.moonshot.cn/v1/chat/completions';
+        const KIMI_API_KEY = 'sk-evMHcHPT2lHrvFwxKd8XuT8QARO1qLy09kT5CHb1hcGCq9Oj';
+
+        async function callKimiAPI(word) {
+            const prompt = `请以生动有趣的方式分析英语单词 "${word}"，并按以下格式提供JSON格式的详细信息：
+            {
+                "word": "${word}",
+                "phonetic": "音标",
+                "translations": {
+                    "en": "英文释义",
+                    "zh": "中文释义"
+                },
+                "wordType": "词性（中文表述）",
+                "etymology": {
+                    "root": "词根分析（请用中文详细说明，要突出重点，用符号标记关键部分）",
+                    "origin": "词源信息（请用中文详细说明，要像讲故事一样生动）"
+                },
+                "memoryTips": "记忆方法（请提供生动、有趣、容易记住的方法）",
+                "examples": {
+                    "en": "英文例句",
+                    "zh": "中文例句"
+                }
+            }
+            
+            详细要求：
+            1. 词源分析部分：
+               - 使用 "*" 标记重要的词根词缀
+               - 像讲故事一样展开词源解释
+               - 突出词根之间的关联性
+               - 加入简单的历史背景或有趣典故
+            
+            2. 记忆方法要求（至少包含以下两种）：
+               - 谐音记忆：创造有趣的谐音联想
+               - 图像联想：创造生动的画面
+               - 情景记忆：设计有趣的场景
+               - 词根拆解：用简单易懂的方式解释
+               - 相关词对比：通过对比加深记忆
+            
+            请确保内容生动有趣且准确。`;
+
+            try {
+                const response = await fetch(KIMI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${KIMI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'moonshot-v1-8k',
+                        messages: [
+                            {
+                                role: 'user',
+                                content: prompt
+                            }
+                        ],
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API请求失败: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const contentString = data.choices[0].message.content;
+                return JSON.parse(contentString);
+            } catch (error) {
+                console.error('API调用错误:', error);
+                throw error;
+            }
+        }
+
+        async function handleWordAnalysis() {
+            const word = document.getElementById('wordInput').value.trim();
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorMessage = document.getElementById('errorMessage');
+            const resultSection = document.getElementById('resultSection');
+
+            // Special cases for Easter eggs
+            if (word === '张进') {
+                resultSection.style.display = 'block';
+                loadingIndicator.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                resultSection.innerHTML = `
+                    <div class="special-message">
+                        <div class="rose">
+                            <pre>
+                            🌹
+                              _,--._
+                            /\`  a   \\
+                           |   /-\\   |
+                            \\  =|=  /
+                             '--:--'
+                                Y
+                                |
+                                |
+                                |
+                            \\.|./
+                             \\Y/
+                              |
+                              |
+                              |
+                            </pre>
+                        </div>
+                        <div class="love-message">
+                            余若文我爱你 ❤️
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (word === '余若文') {
+                resultSection.style.display = 'block';
+                loadingIndicator.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                resultSection.innerHTML = `
+                    <div class="special-message">
+                        <div class="love-message">
+                            张进爱你 ❤️
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (!word) {
+                showError('请输入要查询的单词！');
+                return;
+            }
+
+            loadingIndicator.style.display = 'block';
+            errorMessage.style.display = 'none';
+            resultSection.style.display = 'none';
+
+            try {
+                const wordData = await callKimiAPI(word);
+                displayResult(wordData);
+            } catch (error) {
+                showError('抱歉，查询过程中出现错误，请稍后重试！');
+                console.error(error);
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function displayResult(data) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.style.display = 'block';
+            
+            resultSection.innerHTML = `
+                <div class="result-item">
+                    <h3>基本信息</h3>
+                    <p><strong>单词：</strong>${data.word}</p>
+                    <p><strong>音标：</strong><span class="pronunciation">${data.phonetic}</span></p>
+                    <p><strong>词性：</strong>${data.wordType}</p>
+                </div>
+                
+                <div class="result-item">
+                    <h3>释义</h3>
+                    <p><strong>英文释义：</strong>${data.translations.en}</p>
+                    <p><strong>中文释义：</strong>${data.translations.zh}</p>
+                </div>
+                
+                <div class="result-item">
+                    <h3>词源分析</h3>
+                    <div class="etymology-item">
+                        <p><strong>词根：</strong>${data.etymology.root}</p>
+                        <p><strong>词源：</strong>${data.etymology.origin}</p>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <h3>记忆方法</h3>
+                    <div class="memory-tips">
+                        ${data.memoryTips}
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <h3>例句</h3>
+                    <div class="example">
+                        <p>${data.examples.en}</p>
+                        <p>${data.examples.zh}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add Enter key support
+        document.getElementById('wordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleWordAnalysis();
+            }
+        });
+    </script>
+</body>
+</html>
