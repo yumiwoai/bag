@@ -3,234 +3,660 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>晨曦英语</title>
+    <title>晨曦英语 ✨ 让学习充满阳光</title>
     <style>
-        :root {
-            --primary-color: #4F46E5;
-            --secondary-color: #818CF8;
-            --background-color: #F3F4F6;
-            --text-color: #1F2937;
-            --border-color: #E5E7EB;
-            --hover-color: #4338CA;
-            --error-color: #DC2626;
-            --error-bg: #FEE2E2;
-            --love-color: #E91E63;
-        }
-        
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 35%, #fbcfe8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 动画背景装饰 */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 15s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 24px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        /* 头部标题 */
         .header {
             text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--border-color);
+            padding: 30px 0;
+            animation: fadeIn 0.8s ease;
         }
-        
-        .header h1 {
-            color: var(--primary-color);
-            font-size: 2em;
-            margin-bottom: 8px;
+
+        .title {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #ff6b9d, #feca57, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 107, 157, 0.2);
+            margin-bottom: 10px;
         }
-        
-        .input-section {
-            margin-bottom: 24px;
+
+        .subtitle {
+            color: #ff6b9d;
+            font-size: 1.1em;
+            font-weight: 300;
         }
-        
-        .input-group {
+
+        /* 搜索框区域 */
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(255, 182, 193, 0.3);
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease;
+        }
+
+        .search-box {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             margin-bottom: 20px;
         }
-        
-        input[type="text"] {
+
+        .search-input {
             flex: 1;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-        
-        input[type="text"]:focus {
+            padding: 15px 25px;
+            border: 2px solid #ffc0cb;
+            border-radius: 25px;
+            font-size: 1.1em;
             outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+            transition: all 0.3s ease;
+            background: rgba(255, 240, 245, 0.5);
         }
-        
-        button {
-            background-color: var(--primary-color);
+
+        .search-input:focus {
+            border-color: #ff6b9d;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ff6b9d, #ff9ff3);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 25px;
+            font-size: 1.1em;
             cursor: pointer;
-            font-size: 1em;
             transition: all 0.3s ease;
-            font-weight: 500;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
         }
-        
-        button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-1px);
+
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
         }
-        
-        button:active {
+
+        .search-btn:active {
             transform: translateY(0);
         }
-        
+
+        /* 快速标签 */
+        .quick-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* 相关短语和单词样式 */
+        .phrase-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ffc0cb;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .phrase-item:last-child {
+            border-bottom: none;
+        }
+
+        .phrase-item strong {
+            color: #ff6b9d;
+            margin-right: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: #6c5ce7;
+            border: none;
+            box-shadow: 0 3px 10px rgba(253, 203, 110, 0.3);
+            margin: 5px;
+        }
+
+        .tag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.5);
+        }
+
+        /* 结果展示区 */
+        .result-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(255, 182, 193, 0.3);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        /* 加载动画 */
         .loading {
             display: none;
             text-align: center;
+            padding: 40px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ffc0cb;
+            border-radius: 50%;
+            border-top-color: #ff6b9d;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 单词卡片 */
+        .word-card {
+            margin-bottom: 25px;
             padding: 20px;
-            color: var(--primary-color);
-            font-weight: 500;
+            background: linear-gradient(135deg, #fff5f8, #ffe8f3);
+            border-radius: 20px;
+            border-left: 5px solid #ff6b9d;
         }
-        
-        .result-section {
-            display: none;
-            background-color: #F9FAFB;
-            border-radius: 8px;
+
+        .word-header {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .word-title {
+            font-size: 2em;
+            color: #ff6b9d;
+            font-weight: bold;
+        }
+
+        .phonetic {
+            color: #ff9ff3;
+            font-size: 1.2em;
+        }
+
+        .word-type {
+            background: linear-gradient(135deg, #feca57, #f6b93b);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        /* 信息区块 */
+        .info-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #ff6b9d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5em;
+        }
+
+        .section-content {
+            color: #666;
+            line-height: 1.8;
+            padding-left: 35px;
+        }
+
+        /* 例句样式 */
+        .example-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .example-en {
+            color: #495057;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .example-zh {
+            color: #868e96;
+            font-style: italic;
+        }
+
+        /* 记忆方法 */
+        .memory-tips {
+            background: linear-gradient(135deg, #fff9c4, #ffeb3b);
             padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 3px 15px rgba(255, 235, 59, 0.3);
         }
-        
-        .result-item {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
+
+        .memory-tips-title {
+            color: #f57c00;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
-        
-        .result-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .result-item h3 {
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 1.25em;
-        }
-        
-        .pronunciation {
-            color: #6B7280;
-            font-family: monospace;
-            background-color: #F3F4F6;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        .example {
-            background-color: #EEF2FF;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 12px;
-        }
-        
-        .error-message {
-            display: none;
-            color: var(--error-color);
-            background-color: var(--error-bg);
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 12px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        .etymology-item {
-            margin-bottom: 12px;
+
+        .memory-content {
+            color: #795548;
             line-height: 1.8;
         }
-        
-        .memory-tips {
-            background-color: #ECFDF5;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 12px;
-        }
 
-        .special-message {
-            text-align: center;
+        /* 谐音记忆特别样式 */
+        .phonetic-memory {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border: 2px solid #ff6b9d;
             padding: 20px;
-            animation: fadeIn 1s ease-in;
-        }
-
-        .rose {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: var(--love-color);
-            animation: floatAnimation 3s ease-in-out infinite;
-        }
-
-        .love-message {
-            color: var(--love-color);
-            font-size: 24px;
+            border-radius: 20px;
             margin: 20px 0;
-            font-weight: bold;
-            animation: pulseAnimation 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.2);
         }
 
+        .phonetic-memory::before {
+            content: '🎵';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .phonetic-memory-title {
+            color: #ff6b9d;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phonetic-memory-badge {
+            background: linear-gradient(135deg, #ff6b9d, #ff9ff3);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .phonetic-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .phonetic-item:hover {
+            transform: translateX(10px);
+            border-color: #ff6b9d;
+            box-shadow: 0 3px 15px rgba(255, 107, 157, 0.2);
+        }
+
+        .phonetic-word {
+            font-size: 1.3em;
+            color: #ff6b9d;
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        .phonetic-arrow {
+            color: #feca57;
+            font-size: 1.5em;
+        }
+
+        .phonetic-text {
+            font-size: 1.2em;
+            color: #6c5ce7;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .phonetic-explanation {
+            color: #95a5a6;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-left: 10px;
+        }
+
+        /* 错误提示 */
+        .error-message {
+            background: linear-gradient(135deg, #ff6b9d, #ff9ff3);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* 动画效果 */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
-        @keyframes floatAnimation {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @keyframes pulseAnimation {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2em;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-btn {
+                width: 100%;
+            }
+            
+            .word-header {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 浮动装饰 -->
+    <div class="floating-hearts" id="hearts"></div>
+
     <div class="container">
+        <!-- 头部 -->
         <div class="header">
-            <h1>讨厌洋文</h1>
-            <p>厌学洋文</p>
-            <p>厌学洋文</p>
+            <h1 class="title">✨ 晨曦英语 ✨</h1>
+            <p class="subtitle">让每个单词都充满阳光和温暖 💕</p>
         </div>
-        
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="wordInput" placeholder="请输入要查询的英语单词..." />
-                <button onclick="handleWordAnalysis()">查询</button>
+
+        <!-- 搜索区域 -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="wordInput" placeholder="输入你想查询的单词..." />
+                <button class="search-btn" onclick="searchWord()">🔍 查询</button>
+            </div>
+            
+            <div class="quick-tags">
+                <button class="tag" onclick="quickSearch('ambulance')">🚑 ambulance</button>
+                <button class="tag" onclick="quickSearch('pest')">🐛 pest</button>
+                <button class="tag" onclick="quickSearch('economy')">💰 economy</button>
+                <button class="tag" onclick="quickSearch('champion')">🏆 champion</button>
+                <button class="tag" onclick="quickSearch('diamond')">💎 diamond</button>
+                <button class="tag" onclick="quickSearch('adventure')">🗺️ adventure</button>
+                <button class="tag" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white;" onclick="testAPI()">🔧 测试API</button>
             </div>
         </div>
-        
-        <div id="loadingIndicator" class="loading">
-           不准学了做菜去
+
+        <!-- 加载动画 -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p style="color: #ff6b9d; margin-top: 20px;">正在为你查询，请稍候...</p>
         </div>
-        
-        <div id="errorMessage" class="error-message"></div>
-        
-        <div id="resultSection" class="result-section"></div>
+
+        <!-- 结果展示区 -->
+        <div class="result-container" id="resultContainer"></div>
     </div>
 
     <script>
+        // ⚠️ 重要提示：
+        // 1. 如果遇到CORS错误，将下面的 USE_PROXY 改为 true
+        // 2. 然后访问 https://cors-anywhere.herokuapp.com/corsdemo 激活代理
+        // 3. 正式部署建议使用后端服务器代理API请求
+        
+        // 创建浮动装饰
+        function createHearts() {
+            const hearts = document.getElementById('hearts');
+            const heartSymbols = ['💕', '💖', '💗', '💝', '✨', '🌸'];
+            
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 15 + 's';
+                    hearts.appendChild(heart);
+                }, i * 1500);
+            }
+        }
+
+        createHearts();
+
+        // Kimi API配置
         const KIMI_API_ENDPOINT = 'https://api.moonshot.cn/v1/chat/completions';
         const KIMI_API_KEY = 'sk-evMHcHPT2lHrvFwxKd8XuT8QARO1qLy09kT5CHb1hcGCq9Oj';
+        
+        // CORS代理设置（用于解决跨域问题）
+        // 步骤1: 将 USE_PROXY 设为 true
+        // 步骤2: 访问 https://cors-anywhere.herokuapp.com/corsdemo 点击按钮激活
+        // 步骤3: 刷新本页面即可使用
+        const USE_PROXY = false; // ← 如遇到CORS错误，改为 true
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+        const API_URL = USE_PROXY ? CORS_PROXY + KIMI_API_ENDPOINT : KIMI_API_ENDPOINT;
 
-        async function callKimiAPI(word) {
+        // 查询单词
+        async function searchWord() {
+            const wordInput = document.getElementById('wordInput');
+            const word = wordInput.value.trim();
+            
+            if (!word) {
+                showError('请输入要查询的单词哦~ 💕');
+                return;
+            }
+
+            showLoading();
+            
+            try {
+                const wordData = await queryKimi(word);
+                displayResult(wordData);
+            } catch (error) {
+                console.error('查询失败:', error);
+                
+                // 根据错误类型显示不同提示
+                if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+                    showError(`
+                        <div style="text-align: left; padding: 10px;">
+                            <h3>🚫 跨域错误（CORS）</h3>
+                            <p>浏览器安全策略阻止了API调用，请尝试：</p>
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>在代码中设置 USE_PROXY = true</li>
+                                <li>或使用后端服务器代理</li>
+                                <li>或先查看模拟数据效果 👇</li>
+                            </ol>
+                        </div>
+                    `);
+                } else if (error.message.includes('401')) {
+                    showError('API密钥无效，请检查API Key是否正确 🔑');
+                } else if (error.message.includes('429')) {
+                    showError('请求太频繁，请稍后再试 ⏰');
+                } else {
+                    showError(`出错了：${error.message} 💔`);
+                }
+                
+                // 显示模拟数据让用户看看效果
+                setTimeout(() => {
+                    console.log('显示模拟数据以展示效果...');
+                    displayMockData(word);
+                }, 2000);
+            }
+        }
+
+        // 测试API连接
+        async function testAPI() {
+            console.log('开始测试API连接...');
+            showLoading();
+            
+            try {
+                const testResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${KIMI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'moonshot-v1-8k',
+                        messages: [{
+                            role: 'user',
+                            content: '回复OK'
+                        }],
+                        temperature: 0.3,
+                        max_tokens: 10
+                    })
+                });
+                
+                if (testResponse.ok) {
+                    const data = await testResponse.json();
+                    hideLoading();
+                    showError('✅ API连接成功！可以正常使用了~');
+                    console.log('API测试成功:', data);
+                } else {
+                    throw new Error(`API返回错误: ${testResponse.status}`);
+                }
+            } catch (error) {
+                hideLoading();
+                console.error('API测试失败:', error);
+                
+                if (error.message.includes('Failed to fetch')) {
+                    showError(`
+                        <div style="text-align: left;">
+                            <h3>❌ CORS错误</h3>
+                            <p>需要通过以下方式解决：</p>
+                            <ol style="padding-left: 20px;">
+                                <li>设置 USE_PROXY = true 并激活代理</li>
+                                <li>或部署后端服务器</li>
+                            </ol>
+                        </div>
+                    `);
+                } else {
+                    showError(`API测试失败: ${error.message}`);
+                }
+            }
+        }
+
+        // 快速查询
+        function quickSearch(word) {
+            document.getElementById('wordInput').value = word;
+            searchWord();
+        }
+
+        // 调用Kimi API
+        async function queryKimi(word) {
             const prompt = `请以生动有趣的方式分析英语单词 "${word}"，并按以下格式提供JSON格式的详细信息：
             {
                 "word": "${word}",
@@ -244,11 +670,26 @@
                     "root": "词根分析（请用中文详细说明，要突出重点，用符号标记关键部分）",
                     "origin": "词源信息（请用中文详细说明，要像讲故事一样生动）"
                 },
-                "memoryTips": "记忆方法（请提供生动、有趣、容易记住的方法）",
+                "phoneticMemory": {
+                    "chinese": "中文谐音（根据单词的英文发音找最接近的中文读音）",
+                    "explanation": "谐音联想解释（把谐音和单词意思巧妙结合）"
+                },
+                "memoryTips": "其他记忆方法（请提供生动、有趣、容易记住的方法）",
                 "examples": {
                     "en": "英文例句",
                     "zh": "中文例句"
-                }
+                },
+                "phrases": [
+                    {"en": "英文短语1", "zh": "中文释义1"},
+                    {"en": "英文短语2", "zh": "中文释义2"},
+                    {"en": "英文短语3", "zh": "中文释义3"}
+                ],
+                "relatedWords": [
+                    {"en": "相关单词1", "zh": "中文释义1"},
+                    {"en": "相关单词2", "zh": "中文释义2"},
+                    {"en": "相关单词3", "zh": "中文释义3"}
+                ],
+                "examPoints": "大学四级考点（详细说明该词在四级考试中的重要性和常见考法）"
             }
             
             详细要求：
@@ -258,17 +699,32 @@
                - 突出词根之间的关联性
                - 加入简单的历史背景或有趣典故
             
-            2. 记忆方法要求（至少包含以下两种）：
-               - 谐音记忆：创造有趣的谐音联想
+            2. 谐音记忆（phoneticMemory）- 这是最重要的部分：
+               - 根据单词的实际英文发音，找最接近的中文读音
+               - 不是音标分析，而是找中文谐音
+               - 谐音要尽可能贴近英文发音
+               - 把谐音和单词含义巧妙结合成一句话
+               - 示例：
+                 * ambulance → "俺不能死"（救护车来了，俺不能死）
+                 * pest → "拍死它"（害虫来了，拍死它）
+                 * economy → "依靠农民"（经济依靠农民）
+                 * pregnant → "扑来个男的"（怀孕了）
+                 * abandon → "一板凳"（放弃了，只剩一板凳）
+               - 谐音可以是完整的句子，也可以是词组
+               - 重点是读音相似，便于记忆
+            
+            3. 其他记忆方法（至少包含两种）：
                - 图像联想：创造生动的画面
                - 情景记忆：设计有趣的场景
                - 词根拆解：用简单易懂的方式解释
                - 相关词对比：通过对比加深记忆
             
-            请确保内容生动有趣且准确。`;
+            4. 相关短语和相关单词都要包含中英文对照
+            
+            请确保内容生动有趣且准确，并返回纯JSON格式。`;
 
             try {
-                const response = await fetch(KIMI_API_ENDPOINT, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -282,142 +738,377 @@
                                 content: prompt
                             }
                         ],
-                        temperature: 0.7
+                        temperature: 0.7,
+                        max_tokens: 2000
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API请求失败: ${response.status}`);
+                    throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
                 }
 
                 const data = await response.json();
-                const contentString = data.choices[0].message.content;
-                return JSON.parse(contentString);
+                
+                if (data.error) {
+                    throw new Error(`API错误: ${data.error.message}`);
+                }
+                
+                const content = data.choices[0].message.content;
+                
+                // 尝试解析JSON
+                try {
+                    // 移除可能的markdown代码块标记
+                    const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+                    const parsedData = JSON.parse(jsonStr);
+                    
+                    // 如果API没有返回谐音记忆，尝试使用示例（仅用于展示）
+                    if (!parsedData.phoneticMemory && phoneticMemoryExamples[word.toLowerCase()]) {
+                        parsedData.phoneticMemory = phoneticMemoryExamples[word.toLowerCase()];
+                    }
+                    
+                    return parsedData;
+                } catch (e) {
+                    console.error('JSON解析失败:', e);
+                    // 如果解析失败，返回一个基本结构
+                    return {
+                        word: word,
+                        phonetic: '查询中...',
+                        translations: {
+                            en: content,
+                            zh: '解析失败，请查看原始内容'
+                        },
+                        wordType: '未知',
+                        etymology: {
+                            root: '暂无',
+                            origin: '暂无'
+                        },
+                        phoneticMemory: phoneticMemoryExamples[word.toLowerCase()] || null,
+                        memoryTips: content,
+                        examples: {
+                            en: '',
+                            zh: ''
+                        },
+                        phrases: [],
+                        relatedWords: []
+                    };
+                }
             } catch (error) {
-                console.error('API调用错误:', error);
+                console.error('详细错误信息:', error);
+                
+                // 检查是否是CORS错误
+                if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+                    console.log('💡 提示：检测到CORS错误，请尝试以下解决方案：');
+                    console.log('1. 将 USE_PROXY 设置为 true');
+                    console.log('2. 访问 https://cors-anywhere.herokuapp.com/corsdemo 并点击按钮激活代理');
+                    console.log('3. 或部署一个后端服务器来代理API请求');
+                }
+                
                 throw error;
             }
         }
 
-        async function handleWordAnalysis() {
-            const word = document.getElementById('wordInput').value.trim();
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const errorMessage = document.getElementById('errorMessage');
-            const resultSection = document.getElementById('resultSection');
+        // 谐音记忆示例（仅用于API失败时的展示）
+        const phoneticMemoryExamples = {
+            'ambulance': { chinese: '俺不能死', explanation: '救护车来了，俺不能死！' },
+            'pest': { chinese: '拍死它', explanation: '害虫来了，拍死它！' },
+            'economy': { chinese: '依靠农民', explanation: '经济发展依靠农民' }
+        };
 
-            // Special cases for Easter eggs
-            if (word === '张进') {
-                resultSection.style.display = 'block';
-                loadingIndicator.style.display = 'none';
-                errorMessage.style.display = 'none';
-                
-                resultSection.innerHTML = `
-                    <div class="special-message">
-                        <div class="rose">
-                            <pre>
-                      SB张进
-                            </pre>
+        // 生成谐音记忆HTML
+        function generatePhoneticMemory(data) {
+            // 使用API返回的谐音记忆或示例
+            if (data.phoneticMemory && data.phoneticMemory.chinese) {
+                return `
+                    <div class="phonetic-memory">
+                        <div class="phonetic-memory-title">
+                            🎯 独家谐音记忆法
+                            <span class="phonetic-memory-badge">超好记</span>
                         </div>
-                        <div class="love-message">
-                        张进是傻逼
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-
-            if (word === '余若文') {
-                resultSection.style.display = 'block';
-                loadingIndicator.style.display = 'none';
-                errorMessage.style.display = 'none';
-                
-                resultSection.innerHTML = `
-                    <div class="special-message">
-                        <div class="love-message">
-                            张进是大傻逼
+                        <div class="phonetic-item">
+                            <span class="phonetic-word">${data.word}</span>
+                            <span class="phonetic-arrow">➔</span>
+                            <span class="phonetic-text">${data.phoneticMemory.chinese}</span>
+                            <span class="phonetic-explanation">(${data.phoneticMemory.explanation})</span>
                         </div>
                     </div>
                 `;
-                return;
             }
-
-            if (!word) {
-                showError('请输入要查询的单词！');
-                return;
-            }
-
-            loadingIndicator.style.display = 'block';
-            errorMessage.style.display = 'none';
-            resultSection.style.display = 'none';
-
-            try {
-                const wordData = await callKimiAPI(word);
-                displayResult(wordData);
-            } catch (error) {
-                showError('抱歉，查询过程中出现错误，请稍后重试！');
-                console.error(error);
-            } finally {
-                loadingIndicator.style.display = 'none';
-            }
-        }
-
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
-
-        function displayResult(data) {
-            const resultSection = document.getElementById('resultSection');
-            resultSection.style.display = 'block';
             
-            resultSection.innerHTML = `
-                <div class="result-item">
-                    <h3>基本信息</h3>
-                    <p><strong>单词：</strong>${data.word}</p>
-                    <p><strong>音标：</strong><span class="pronunciation">${data.phonetic}</span></p>
-                    <p><strong>词性：</strong>${data.wordType}</p>
-                </div>
-                
-                <div class="result-item">
-                    <h3>释义</h3>
-                    <p><strong>英文释义：</strong>${data.translations.en}</p>
-                    <p><strong>中文释义：</strong>${data.translations.zh}</p>
-                </div>
-                
-                <div class="result-item">
-                    <h3>词源分析</h3>
-                    <div class="etymology-item">
-                        <p><strong>词根：</strong>${data.etymology.root}</p>
-                        <p><strong>词源：</strong>${data.etymology.origin}</p>
+            // 如果没有谐音记忆，显示提示
+            return `
+                <div class="phonetic-memory">
+                    <div class="phonetic-memory-title">
+                        🎯 谐音记忆法
+                        <span class="phonetic-memory-badge">AI生成中</span>
                     </div>
-                </div>
-                
-                <div class="result-item">
-                    <h3>记忆方法</h3>
-                    <div class="memory-tips">
-                        ${data.memoryTips}
-                    </div>
-                </div>
-                
-                <div class="result-item">
-                    <h3>例句</h3>
-                    <div class="example">
-                        <p>${data.examples.en}</p>
-                        <p>${data.examples.zh}</p>
+                    <div class="phonetic-item">
+                        <span class="phonetic-word">${data.word}</span>
+                        <span class="phonetic-arrow">➔</span>
+                        <span class="phonetic-text">正在为你想谐音...</span>
+                        <span class="phonetic-explanation">(API将根据发音生成中文谐音)</span>
                     </div>
                 </div>
             `;
         }
+        function displayMockData(word) {
+            const mockData = {
+                'love': {
+                    word: 'love',
+                    phonetic: '/lʌv/',
+                    translations: {
+                        en: 'A strong feeling of affection, care, and attachment',
+                        zh: '爱，热爱，喜爱'
+                    },
+                    wordType: '名词/动词',
+                    etymology: {
+                        root: '*love* 来自古英语 *lufu*，与德语的 *Liebe* 同源。核心含义都是"关怀"和"珍视"。',
+                        origin: '在古老的日耳曼部落中，love最初指的是对家人和部落成员的关怀之情。随着时间推移，这个词逐渐扩展到了浪漫之爱。有趣的是，在中世纪，骑士们将love视为一种高贵的情感，必须通过勇敢的行为来证明。'
+                    },
+                    memoryTips: '💝 谐音记忆：love ≈ "老妈" - 老妈的爱是最无私的！\n🎨 图像联想：想象一个红色的心形气球，飘在蓝天上\n📖 情景记忆：I love you这句话是全世界通用的魔法咒语',
+                    examples: {
+                        en: 'Love makes the world go round.',
+                        zh: '爱让世界转动。'
+                    },
+                    phrases: ['fall in love 坠入爱河', 'love at first sight 一见钟情', 'puppy love 初恋'],
+                    relatedWords: ['lover 爱人', 'lovely 可爱的', 'beloved 心爱的'],
+                    examPoints: '四级高频词汇！常考搭配：be in love with（与...相爱），love to do/doing（喜欢做某事）。注意love作动词时的用法区别。'
+                },
+                'happy': {
+                    word: 'happy',
+                    phonetic: '/ˈhæpi/',
+                    translations: {
+                        en: 'Feeling or showing pleasure or contentment',
+                        zh: '快乐的，幸福的，高兴的'
+                    },
+                    wordType: '形容词',
+                    etymology: {
+                        root: '*hap* 意为"运气、机会"，*-y* 是形容词后缀。所以 happy 原意是"幸运的"。',
+                        origin: '14世纪的英国人认为，快乐来自于好运气。当好事"碰巧"(happen)发生时，人们就会感到happy。这个词从"幸运"演变为"快乐"，反映了古人认为快乐依赖于命运的观念。'
+                    },
+                    memoryTips: '🎵 谐音记忆：happy ≈ "哈皮" - 笑哈哈的样子\n😊 表情联想：看到happy就想到😊的表情\n🎉 场景记忆：Happy Birthday! 生日快乐是最常用的祝福',
+                    examples: {
+                        en: 'She was happy to see her old friends again.',
+                        zh: '她很高兴再次见到老朋友。'
+                    },
+                    phrases: ['happy birthday 生日快乐', 'happy ending 美满结局', 'happy hour 欢乐时光'],
+                    relatedWords: ['happiness 幸福', 'happily 快乐地', 'unhappy 不快乐的'],
+                    examPoints: '四级必考词！常见搭配：be happy with/about（对...感到满意），happy to do（很高兴做某事）。写作中的高频词汇。'
+                },
+                'dream': {
+                    word: 'dream',
+                    phonetic: '/driːm/',
+                    translations: {
+                        en: 'A series of thoughts, images, and sensations occurring in sleep; an aspiration or goal',
+                        zh: '梦，梦想，理想'
+                    },
+                    wordType: '名词/动词',
+                    etymology: {
+                        root: '*dream* 源自古英语 *drēam*，原意是"欢乐、音乐"，后来才演变为"梦境"。',
+                        origin: '在盎格鲁-撒克逊时期，dream指的是欢乐的聚会和音乐。人们发现，美好的梦境也能带来类似的愉悦感，于是这个词逐渐转变为今天的"梦"。现在它既指睡眠中的梦，也指人生的梦想。'
+                    },
+                    memoryTips: '🌙 联想记忆：d-ream，"的"(de)光线(ream)，梦是心灵的光\n💭 图像记忆：想象云朵形状的对话框，里面装满梦想\n✨ 词根记忆：dream = d + ream(光束)，梦想是照进现实的光',
+                    examples: {
+                        en: 'Follow your dreams and never give up.',
+                        zh: '追随你的梦想，永不放弃。'
+                    },
+                    phrases: ['dream come true 梦想成真', 'sweet dreams 做个好梦', 'dream job 理想工作'],
+                    relatedWords: ['dreamer 梦想家', 'dreamy 梦幻的', 'daydream 白日梦'],
+                    examPoints: '四级重点词汇！常考：dream of/about doing（梦想做某事），dream用作动词和名词的区别。作文中表达理想抱负的必备词。'
+                },
+                'default': {
+                    word: word,
+                    phonetic: '/ˈwɜːrd/',
+                    translations: {
+                        en: 'Example definition in English',
+                        zh: '示例中文释义'
+                    },
+                    wordType: '名词',
+                    etymology: {
+                        root: `*${word}* 的词根分析示例`,
+                        origin: `这是关于 ${word} 的词源故事...`
+                    },
+                    memoryTips: `💡 记忆 ${word} 的小技巧：可以联想相关的画面或者谐音...`,
+                    examples: {
+                        en: `This is an example sentence with ${word}.`,
+                        zh: `这是一个包含 ${word} 的例句。`
+                    },
+                    phrases: ['phrase 1', 'phrase 2', 'phrase 3'],
+                    relatedWords: ['related1', 'related2', 'related3'],
+                    examPoints: '这是四级考试相关的考点说明...'
+                }
+            };
 
-        // Add Enter key support
-        document.getElementById('wordInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                handleWordAnalysis();
+            const data = mockData[word.toLowerCase()] || mockData['default'];
+            hideLoading();
+            displayResult(data);
+        }
+
+        // 显示加载动画
+        function showLoading() {
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('resultContainer').classList.remove('show');
+        }
+
+        // 隐藏加载动画
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('show');
+        }
+
+        // 显示结果
+        function displayResult(data) {
+            hideLoading();
+            
+            const resultContainer = document.getElementById('resultContainer');
+            
+            let phrasesHtml = '';
+            if (data.phrases && data.phrases.length > 0) {
+                const phrasesContent = data.phrases.map(phrase => {
+                    // 兼容两种格式：字符串或对象
+                    if (typeof phrase === 'string') {
+                        return `<div class="phrase-item">${phrase}</div>`;
+                    } else if (phrase.en && phrase.zh) {
+                        return `<div class="phrase-item"><strong>${phrase.en}</strong> - ${phrase.zh}</div>`;
+                    }
+                    return '';
+                }).join('');
+                
+                phrasesHtml = `
+                    <div class="info-section">
+                        <div class="section-title">
+                            <span class="section-icon">📚</span>
+                            相关短语
+                        </div>
+                        <div class="section-content">
+                            ${phrasesContent}
+                        </div>
+                    </div>
+                `;
+            }
+
+            let relatedWordsHtml = '';
+            if (data.relatedWords && data.relatedWords.length > 0) {
+                const wordsContent = data.relatedWords.map(word => {
+                    // 兼容两种格式：字符串或对象
+                    if (typeof word === 'string') {
+                        return `<span class="tag">${word}</span>`;
+                    } else if (word.en && word.zh) {
+                        return `<span class="tag" title="${word.zh}">${word.en} (${word.zh})</span>`;
+                    }
+                    return '';
+                }).join(' ');
+                
+                relatedWordsHtml = `
+                    <div class="info-section">
+                        <div class="section-title">
+                            <span class="section-icon">🔗</span>
+                            相关单词
+                        </div>
+                        <div class="section-content">
+                            ${wordsContent}
+                        </div>
+                    </div>
+                `;
+            }
+
+            let examPointsHtml = '';
+            if (data.examPoints) {
+                examPointsHtml = `
+                    <div class="info-section" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);">
+                        <div class="section-title" style="color: #4caf50;">
+                            <span class="section-icon">📝</span>
+                            大学四级考点
+                        </div>
+                        <div class="section-content">
+                            ${data.examPoints}
+                        </div>
+                    </div>
+                `;
+            }
+
+            resultContainer.innerHTML = `
+                <div class="word-card">
+                    <div class="word-header">
+                        <span class="word-title">${data.word}</span>
+                        <span class="phonetic">${data.phonetic}</span>
+                        <span class="word-type">${data.wordType}</span>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title">
+                        <span class="section-icon">💬</span>
+                        释义
+                    </div>
+                    <div class="section-content">
+                        <strong>英文：</strong> ${data.translations.en}<br>
+                        <strong>中文：</strong> ${data.translations.zh}
+                    </div>
+                </div>
+
+                ${generatePhoneticMemory(data)}
+
+                <div class="info-section">
+                    <div class="section-title">
+                        <span class="section-icon">🌱</span>
+                        词根分析
+                    </div>
+                    <div class="section-content">
+                        ${data.etymology.root}
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title">
+                        <span class="section-icon">📖</span>
+                        词源故事
+                    </div>
+                    <div class="section-content">
+                        ${data.etymology.origin}
+                    </div>
+                </div>
+
+                <div class="memory-tips">
+                    <div class="memory-tips-title">
+                        💡 其他记忆小妙招
+                    </div>
+                    <div class="memory-content">
+                        ${data.memoryTips}
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title">
+                        <span class="section-icon">✏️</span>
+                        例句
+                    </div>
+                    <div class="example-box">
+                        <div class="example-en">${data.examples.en}</div>
+                        <div class="example-zh">${data.examples.zh}</div>
+                    </div>
+                </div>
+
+                ${phrasesHtml}
+                ${relatedWordsHtml}
+                ${examPointsHtml}
+            `;
+            
+            resultContainer.classList.add('show');
+        }
+
+        // 显示错误信息
+        function showError(message) {
+            hideLoading();
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `<div class="error-message">${message}</div>`;
+            resultContainer.classList.add('show');
+        }
+
+        // 回车键触发查询
+        document.getElementById('wordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchWord();
             }
         });
     </script>
 </body>
 </html>
-
-
